@@ -1,5 +1,4 @@
 #include "qgb.hh"
-#include "regular-domain.hh"
 
 #include <algorithm>
 #include <cmath>

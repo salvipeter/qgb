@@ -1,6 +1,6 @@
 #pragma once
 
-#include "domain.hh"
+#include <geometry.hh>
 
 // 1. Set up interpolants
 // 2. Set up midpoint
@@ -16,15 +16,14 @@ public:
   QGB(size_t n);
 
   // Getters & setters
+  size_t size() const;
   Boundary boundary(size_t i) const;
   void setBoundary(size_t i, const Boundary &b);
   Geometry::Point3D midpoint() const;
   void setMidpoint(const Geometry::Point3D &p);
   void resetMidpoint();
-  const Domain *domain() const;
 
   // Evaluation
-  void updateDomain();
   Geometry::Point3D eval(const Geometry::Point2D &uv, double *deficiency = nullptr) const;
   Geometry::TriMesh eval(size_t resolution) const;
 
@@ -34,5 +33,18 @@ private:
   size_t n_;
   Geometry::Point3D central_cp_, midpoint_;
   std::vector<Boundary> boundaries_;
-  std::unique_ptr<Domain> domain_;
+
+  class Domain {
+  public:
+    Domain(size_t n);
+    Geometry::Point2D center() const;
+    Geometry::DoubleVector barycentric(const Geometry::Point2D &uv) const;
+    Geometry::Point2DVector parameters(size_t resolution) const;
+    Geometry::TriMesh meshTopology(size_t resolution) const;
+    bool onEdge(size_t resolution, size_t index) const;
+
+  private:
+    size_t n_;
+    Geometry::Point2DVector points_;
+  } domain_;
 };

@@ -1,8 +1,11 @@
 # Quadratic GB patch
 
 C0 GB patch with quadratic Bézier boundary curves and a settable midpoint.
+Note that there is no midpoint control for triangular patches.
+
 Uses a regular domain; for four-sided surfaces it is the same as a quadratic
-tensor-product Bézier patch.
+tensor-product Bézier patch; for three-sided surfaces it is (probably?) the
+same as a triangular quadratic Bézier patch.
 
 The example program reads files of the following format:
 ```
